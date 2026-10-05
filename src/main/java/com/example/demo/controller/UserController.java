@@ -1,7 +1,6 @@
 
 package com.example.demo.controller;
 
-import com.example.demo.dto.user.UserRequest;
 import com.example.demo.dto.user.UserResponse;
 import com.example.demo.service.UserService;
 import org.springframework.http.ResponseEntity;
