@@ -1,5 +1,4 @@
-export interface Task {
-    id: number;
+export interface CreateTaskData {
     title: string;
     completed: boolean;
 }

@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { login } from "../services/authService";
 import type { LoginData } from "../types/Auth";
+import { useNavigate } from "react-router-dom";
 
 export function useLoginForm() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<LoginData>({ username: "", password: "" });
     const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false); 
@@ -26,6 +28,7 @@ export function useLoginForm() {
             console.log("Login successful:", response);
             localStorage.setItem("token", response.token);
             setMessage("Login successful!");
+            navigate("/tasks");
         } catch (error) {
             console.error("Login failed:", error);
             setMessage("Login failed.");
