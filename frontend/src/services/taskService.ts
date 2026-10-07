@@ -11,3 +11,12 @@ export const createTask = async (data: CreateTaskData): Promise<Task> => {
     const response = await api.post<Task>("/tasks", data);
     return response.data;
 };
+
+export const deleteTask = async (id: number): Promise<void> => {
+    await api.delete(`/tasks/${id}`);
+};
+
+export const updateTask = async (id: number, data: CreateTaskData): Promise<Task> => {
+    const response = await api.put<Task>(`/tasks/${id}`, data);
+    return response.data;
+};

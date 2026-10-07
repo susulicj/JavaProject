@@ -43,9 +43,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskResponse createTask(
-            @RequestBody TaskRequest request,
-            Authentication authentication) {
+    public TaskResponse createTask(@RequestBody TaskRequest request,Authentication authentication) {
 
         return taskService.createTask(request, authentication);
     }
@@ -56,4 +54,14 @@ public class TaskController {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public TaskResponse updateTask(
+            @PathVariable Long id,
+            @RequestBody TaskRequest request,
+            Authentication authentication) {
+    
+        return taskService.updateTask(id, request, authentication);
+    }
+ 
 }

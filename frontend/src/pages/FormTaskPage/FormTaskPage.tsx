@@ -1,19 +1,26 @@
 import { InputField } from "../../components/InputField";
 import { Button } from "../../components/Button";
 import { useCreateTask } from "../../hooks/useCreateTask";
+import { useParams } from "react-router-dom";
 
-function CreateTaskPage() {
+function FormTaskPage() {
+    const { id } = useParams();
+
     const {
         formData,
         handleChange,
         handleSubmit,
         isLoading,
         message,
-    } = useCreateTask();
+    } = useCreateTask(id);
+
+    const isEditMode = !!id;
 
     return (
         <div>
-            <h1>Create New Task</h1>
+            <h1>
+                {isEditMode ? "Edit Task" : "Create New Task"}
+            </h1>
 
             <form onSubmit={handleSubmit}>
                 <InputField
@@ -24,7 +31,6 @@ function CreateTaskPage() {
                     onChange={handleChange}
                     disabled={isLoading}
                 />
-
 
                 <div>
                     <label>
@@ -43,7 +49,7 @@ function CreateTaskPage() {
                     type="submit"
                     isLoading={isLoading}
                 >
-                    Create Task
+                    {isEditMode ? "Update Task" : "Create Task"}
                 </Button>
             </form>
 
@@ -52,4 +58,4 @@ function CreateTaskPage() {
     );
 }
 
-export default CreateTaskPage;
+export default FormTaskPage;

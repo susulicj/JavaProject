@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import TasksPage from "./pages/TasksPage/TasksPage";
-import CreateTaskPage from "./pages/CreateTaskPage/CreateTaskPage";
+import FormTaskPage from "./pages/FormTaskPage/FormTaskPage";
 
 function App() {
     return (
@@ -12,12 +12,18 @@ function App() {
                 
                 <Route
                     path="/tasks/create"
-                    element={<CreateTaskPage />}
+                    element={<FormTaskPage />}
                 />
                 <Route
                     path="*"
                     element={<Navigate to="/login" replace />}
                 />
+
+                <Route
+                    path="/tasks/edit/:id"
+                    element={<FormTaskPage />}
+                />
+
 
                 
             </Routes>

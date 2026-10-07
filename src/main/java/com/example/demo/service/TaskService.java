@@ -9,6 +9,7 @@ import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -91,6 +92,30 @@ public class TaskService {
                 task.getTitle(),
                 task.isCompleted()
         );
+    }
+    public TaskResponse updateTask(
+            Long id,
+            TaskRequest request,
+            Authentication authentication) {
+
+        User user = userRepository
+                .findByUsername(authentication.getName())
+                .orElseThrow();
+
+        Task task = taskRepository
+                .findById(id)
+                .orElseThrow();
+
+        if (!task.getUser().getId().equals(user.getId())) {
+            throw new AccessDeniedException("You cannot update this task");
+        }
+
+        task.setTitle(request.getTitle());
+        task.setCompleted(request.isCompleted());
+
+        Task updatedTask = taskRepository.save(task);
+
+        return toResponse(updatedTask);
     }
 }
 

@@ -4,7 +4,7 @@ import TaskList from "../../components/TaskList";
 import { useNavigate } from "react-router-dom";
 
 function TasksPage() {
-    const { tasks, isLoading, message } = useTasks();
+    const { tasks, isLoading, message, onDelete, onUpdate } = useTasks();
     const navigate = useNavigate();
     if (isLoading) {
         return <p>Loading tasks...</p>;
@@ -19,7 +19,7 @@ function TasksPage() {
             {tasks.length === 0 ? (
                 <p>You don't have any tasks yet.</p>
             ) : (
-                <TaskList tasks={tasks} />
+                <TaskList tasks={tasks} onDelete= {onDelete} onUpdate= {onUpdate}/>
             )}
 
             <Button type="button"

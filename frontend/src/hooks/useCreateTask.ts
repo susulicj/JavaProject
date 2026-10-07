@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { createTask } from "../services/taskService";
+import { createTask, updateTask } from "../services/taskService";
 import type { CreateTaskData } from "../types/CreateTaskData";
 
 
-export function useCreateTask() {
+export function useCreateTask(id: string) {
     const [formData, setFormData] = useState<CreateTaskData>({title: "", completed: false,});
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
@@ -24,29 +24,30 @@ export function useCreateTask() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-
+    
         setIsLoading(true);
         setMessage("");
-
+    
         try {
-            const task = await createTask(formData);
-
-            console.log("Task created:", task);
-
-            setMessage("Task created successfully!");
-
-            setFormData({
-                title: "",
-                completed: false,
-            });
+            let task;
+    
+            if (id) {
+                task = await updateTask(Number(id), formData);
+                setMessage("Task updated successfully!");
+            } else {
+                task = await createTask(formData);
+                setMessage("Task created successfully!");
+            }
+    
+            console.log("Task:", task);
+    
         } catch (error) {
-            console.error("Failed to create task:", error);
-            setMessage("Failed to create task.");
+            console.error("Failed to save task:", error);
+            setMessage("Failed to save task.");
         } finally {
             setIsLoading(false);
         }
     };
-
     return {
         formData,
         isLoading,
